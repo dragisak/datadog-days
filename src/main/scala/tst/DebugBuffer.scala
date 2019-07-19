@@ -28,7 +28,10 @@ class DebugBuffer(config: Config) extends PacketBuffer {
     (buffer.length + data.length) <= maxPacketSizeInBytes
 
   private def flushToUDP(data: String): Unit = {
-    println(s"""echo "$data" | nc -u -w1 $hostname $port""")
+    println(s"""echo "$data" | nc -u -w1 $hostname $port
+         |
+       """.stripMargin)
+
   }
 
   override def flush(): Unit = {

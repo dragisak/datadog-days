@@ -13,6 +13,7 @@ object Main extends App {
 
   for (i <- 1 to 10) {
     Kamon.counter("test.counter").increment()
+    Kamon.histogram("test.histogram").record(i % 3)
     Thread.sleep(10)
   }
 
