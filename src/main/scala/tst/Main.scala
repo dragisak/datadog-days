@@ -11,17 +11,21 @@ object Main extends App {
 
   Kamon.addReporter(new DatadogAgentReporter())
 
-  for (i <- 1 to 10) {
-    Kamon.counter("dragisa.test.counter").increment()
-    Kamon.histogram("dragisa.test.histogram").record(i % 3)
-    Thread.sleep(10)
+  while (true) {
+    for (i <- 1 to 10) {
+      Kamon.counter("dragisa.test.counter").increment()
+      Kamon.histogram("dragisa.test.histogram").record(i % 3)
+      Thread.sleep(10)
+    }
+
+    println("Enter for next")
+
+    StdIn.readLine()
   }
 
-  println("Pres ENTER to stop")
-
-  StdIn.readLine()
-
-  println("\nBye!\n")
-  Await.result(Kamon.stopAllReporters(), 10.seconds)
+  sys.addShutdownHook {
+    println("\nBye!\n")
+    Await.result(Kamon.stopAllReporters(), 10.seconds)
+  }
 
 }
